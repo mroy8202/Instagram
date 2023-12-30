@@ -42,7 +42,7 @@ exports.signup = async (req, res) => {
 
         // create profile entry in db
         const profileDetails = await Profile.create({
-            profilePicture: "https://api.dicebear.com/5.x/initials/svg?seed=${name}",
+            profilePicture: `https://api.dicebear.com/5.x/initials/svg?seed=${name}`,
             contactNumber: null,
             gender: null,
         });
