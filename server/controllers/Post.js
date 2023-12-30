@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 const Post = require("../models/postModel");
 
 function isFileTypeSupported(photoType, supportedTypes) {
-    return supportedTypes.includes(fileType);
+    return supportedTypes.includes(photoType);
 }
 
 // createPost
@@ -21,11 +21,13 @@ exports.createPost = async (req, res) => {
             return res.status(404).json({
                 success: false,
                 message: "User or profile not found",
+                data: user
             });
         }
 
         // fetch image
         const photo = req.files.postPicture;
+        console.log("photo: ", photo);
 
         // validation on image
         const supportedTypes = ["jpg", "jpeg", "png"];

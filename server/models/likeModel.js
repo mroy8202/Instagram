@@ -18,4 +18,4 @@ const likeSchema = new mongoose.Schema({
 });
 
 // export 
-module.export = mongoose.model("Like", likeSchema);
+module.exports = mongoose.model("Like", likeSchema);

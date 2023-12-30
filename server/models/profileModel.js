@@ -11,9 +11,9 @@ const profileSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ["Male", "Female"],
+        // enum: ["Male", "Female"],
     }
 });
 
 // export 
-module.export = mongoose.model("Profile", profileSchema);
+module.exports = mongoose.model("Profile", profileSchema);

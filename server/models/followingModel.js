@@ -10,4 +10,4 @@ const followingSchema = new mongoose.Schema({
 });
 
 // export 
-module.export = mongoose.model("Following", followingSchema);
+module.exports = mongoose.model("Following", followingSchema);

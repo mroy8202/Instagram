@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 // import controllers
-import { createPost } from "../controllers/Post";
+const { createPost } = require("../controllers/Post");
+const { auth } = require("../middlewares/auth");
 
 // route handler
 router.post("/createPost", auth, createPost);

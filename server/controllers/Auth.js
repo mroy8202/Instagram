@@ -52,7 +52,8 @@ exports.signup = async (req, res) => {
             name, 
             email, 
             username, 
-            password: hashedPassword
+            password: hashedPassword,
+            profile: profileDetails,
         });
 
         // return a successfull response
@@ -86,7 +87,7 @@ exports.login = async (req, res) => {
         }
 
         // check if user exists or not
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate("profile");
         if(!user) {
             return res.status(401).json({
                 success: false,
@@ -120,6 +121,7 @@ exports.login = async (req, res) => {
             expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
             httpOnly: true
         }
+        console.log("user: ", user);
         return res.cookie("token", token, options).status(200).json({
             success: true,
             Token: token,

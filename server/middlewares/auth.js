@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // auth
-exports.auth = async (req, res) => {
+exports.auth = async (req, res, next) => {
     try {
         // extract token
         const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "");
@@ -18,7 +18,7 @@ exports.auth = async (req, res) => {
         // verify token
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            // console.log("Decoded token: ", decoded);
+            console.log("Decoded token: ", decoded);
             req.user = decoded;
         }
         catch(err) {
