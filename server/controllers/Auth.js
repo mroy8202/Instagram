@@ -2,6 +2,7 @@
 const User = require("../models/userModel");
 const Profile = require("../models/profileModel");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 // signup
@@ -130,6 +131,63 @@ exports.login = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Error while login, please try again"
+        });
+    }
+}
+
+// changePassword
+exports.changePassword = async (req, res) => {
+    try {
+        // fetch user from the token payload from middleware
+        const userDetails = await User.findById(req.user.id);
+
+        // fetch data from req.body
+        const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+        // validate data
+        if(!currentPassword || !newPassword || !confirmNewPassword) {
+            return res.status(401).json({
+                success: false,
+                message: "New passwords donot match",
+            });
+        }
+
+        // validate old password
+        const isPasswordMatch = await bcrypt.compare(currentPassword, userDetails.password);
+        if(!isPasswordMatch) {
+            return res.status(401).json({
+                success: false,
+                message: "current password is incorrect",
+            });
+        }
+
+        // match new passwrod and confirm new password
+        if(newPassword !== confirmNewPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "new password and confirm new password donot match",
+            });
+        }
+
+        // hash the password and update in db
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        const updatedUserDetails = await User.findByIdAndUpdate(
+            req.user.id,
+            {password: hashedPassword},
+            {new: true}
+        );
+
+        // return successfull response
+        return res.status(200).json({
+            success: true,
+            message: "Password updated successfully"
+        });
+    }
+    catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "Couldnot change password, please try again",
+            error: error.message,
         });
     }
 }
