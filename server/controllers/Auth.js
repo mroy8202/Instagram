@@ -1,6 +1,7 @@
 // import 
 const User = require("../models/userModel");
 const Profile = require("../models/profileModel");
+require("dotenv").config();
 
 // signup
 exports.signup = async (req, res) => {
@@ -68,7 +69,68 @@ exports.signup = async (req, res) => {
     }
 }
 
-
 // login
+exports.login = async (req, res) => {
+    try {
+        // fetch data from req.body
+        const { email, password } = req.body;
+
+        // data validation
+        if(!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required"
+            });
+        }
+
+        // check if user exists or not
+        const user = await User.findOne({email});
+        if(!user) {
+            return res.status(401).json({
+                success: false,
+                message: "User is not registered, please signup first"
+            });
+        }
+
+        // match password 
+        const isPassword = await bcrypt.compare(password, user.password);
+        if(!isPassword) {
+            return res.status(401).json({
+                success: false,
+                message: "Password is incorrect"
+            });
+        }
+
+        // generate jwt token
+        const payload = {
+            email: user.email,
+            id: user._id,
+            username: user.username,
+        };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" });
+
+        // save token to user document in database
+        user.token = token;
+        user.password = undefined;
+
+        // set cookie for token and return successfull response
+        const options = {
+            expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+            httpOnly: true
+        }
+        return res.cookie("token", token, options).status(200).json({
+            success: true,
+            Token: token,
+            User: user,
+            message: "Logged in successfully"
+        });
+    }
+    catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error while login, please try again"
+        });
+    }
+}
 
 
