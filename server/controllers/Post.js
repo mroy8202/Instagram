@@ -49,6 +49,16 @@ exports.createPost = async (req, res) => {
             postPicture: image.secure_url,
         });
 
+        // add the new post to the user schema
+        await User.findByIdAndUpdate(
+            userId,
+            {
+                $push: {
+                    posts: post._id,
+                }
+            },
+        );
+
         // return successfull response
         return res.status(200).json({
             success: true,
