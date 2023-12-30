@@ -1,6 +1,7 @@
 // import 
 const User = require("../models/userModel");
 const Profile = require("../models/profileModel");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // signup
