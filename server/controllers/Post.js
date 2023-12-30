@@ -75,3 +75,32 @@ exports.createPost = async (req, res) => {
         });
     }
 }
+
+// deletePost
+exports.deletePost = async (req, res) => {
+    try {
+        // fetch post id
+        const postId = req.params.id;
+
+        // const post = await Post.findById(postId);
+
+        // delete post picture from Cloudinary
+        
+
+        // delete post
+        const postToBeDeleted = await Post.findByIdAndDelete(postId);
+
+        // return successfull response
+        return res.status(200).json({
+            success: true,
+            message: "Post deleted successfully",
+            data: postToBeDeleted,
+        });
+    }
+    catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "cannot delete post"
+        });
+    }
+}
