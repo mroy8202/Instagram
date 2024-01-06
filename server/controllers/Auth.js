@@ -1,6 +1,5 @@
 // import 
 const User = require("../models/userModel");
-const Profile = require("../models/profileModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
@@ -40,20 +39,15 @@ exports.signup = async (req, res) => {
         // hash password using bcrypt
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // create profile entry in db
-        const profileDetails = await Profile.create({
-            profilePicture: `https://api.dicebear.com/5.x/initials/svg?seed=${name}`,
-            contactNumber: null,
-            gender: null,
-        });
-
         // create user entry in db
         const user = await User.create({
             name, 
             email, 
             username, 
             password: hashedPassword,
-            profile: profileDetails,
+            profilePicture: `https://api.dicebear.com/5.x/initials/svg?seed=${name}`,
+            contactNumber: null,
+            gender: null,
         });
 
         // return a successfull response
@@ -87,7 +81,7 @@ exports.login = async (req, res) => {
         }
 
         // check if user exists or not
-        const user = await User.findOne({email}).populate("profile");
+        const user = await User.findOne({email});
         if(!user) {
             return res.status(401).json({
                 success: false,

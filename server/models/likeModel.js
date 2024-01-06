@@ -7,10 +7,6 @@ const likeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    profile: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Profile",
-    },
     post: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",

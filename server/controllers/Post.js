@@ -15,12 +15,12 @@ exports.createPost = async (req, res) => {
         const username = req.user.username;
 
         // fetch profile
-        const user = await User.findById(userId).populate("profile");
+        const user = await User.findById(userId);
 
-        if(!user || !user.profile) {
+        if(!user) {
             return res.status(404).json({
                 success: false,
-                message: "User or profile not found",
+                message: "User not found",
                 data: user
             });
         }
@@ -46,9 +46,10 @@ exports.createPost = async (req, res) => {
 
         // create entry in Post database
         const post = await Post.create({
-            userImage: user.profile.profilePicture,
+            userImage: user.profilePicture,
             username: username,
             postPicture: image.secure_url,
+            postedBy: userId,
         });
 
         // add the new post to the user schema

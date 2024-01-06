@@ -22,9 +22,15 @@ const userSchema = new mongoose.Schema({
     token: {
         type: String,
     },
-    profile: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Profile",
+    profilePicture: {
+        type: String,
+    },
+    contactNumber: {
+        type: Number,
+    },
+    gender: {
+        type: String,
+        // enum: ["Male", "Female"],
     },
     posts: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -11,6 +11,9 @@ exports.likePost = async (req, res) => {
         // fetch user who is going to like the post
         const userId = req.user.id;
 
+        console.log("PostID: ", postId);
+        console.log("userID: ", userId);
+
         // update likes array of post
         const likedPost = await Post.findByIdAndUpdate(
             postId,
@@ -24,7 +27,8 @@ exports.likePost = async (req, res) => {
         if(!likedPost) {
             return res.status(400).json({
                 success: false,
-                message: "cannot like the post"
+                message: "cannot like the post",
+                // data: req.params
             });
         }
 
