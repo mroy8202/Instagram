@@ -47,7 +47,8 @@ exports.createPost = async (req, res) => {
         // create entry in Post database
         const post = await Post.create({
             postPicture: image.secure_url,
-            postedBy: userId,
+            user: user,
+            postedBy: user.username,
             postPicturePublicId: image.public_id,
         });
         // console.log("POST DETAILS: ", post);
@@ -72,7 +73,7 @@ exports.createPost = async (req, res) => {
     catch(error) {
         return res.status(500).json({
             success: false,
-            message: "could not create a post, please try again later"
+            message: "could not create a post, please try again later",
         });
     }
 }
@@ -96,15 +97,15 @@ exports.deletePost = async (req, res) => {
 
         // check if the user id authorized to delete post
         const userId = req.user.id;
-        // console.log("USER ID: ", userId);
-        if(!userId) {
+        const user = await User.findById(userId);
+        if(!user) {
             return res.status(401).json({
                 success: false,
                 message: "User not logged in",
             });
         }
         
-        if(userId !== post.postedBy.toString()) {
+        if(userId !== post.user._id) {
             return res.status(401).json({
                 success: false,
                 message: "user is not authorized to delete the post",
@@ -154,12 +155,11 @@ exports.deletePost = async (req, res) => {
     }
 }
 
-// getAllUserPost
-exports.getAllUserPost = async (req, res) => {
+// getMyPost
+exports.getMyPost = async (req, res) => {
     try {
         // fetch user id
         const userId = req.user.id;
-        // const user = await User.findById(userId);
 
         // validation on data
         if(!userId) {
@@ -185,6 +185,34 @@ exports.getAllUserPost = async (req, res) => {
             success: false,
             message: "Cannot fetch all the posts",
             error: error.message,
+        });
+    }
+}
+
+// getHomepagePost
+exports.getHomepagePost = async (req, res) => {
+    try {
+        // fetch recent posts
+        const posts = await Post.find({})
+            .limit(10)
+            .sort({createdAt: -1})
+            .populate("user")
+            .exec();
+        
+        // console.log("POSTS :", posts);
+
+        // return a successfull response
+        return res.status(200).json({
+            success: true,
+            message: "Posts fetched successfully",
+            data: posts,
+        });
+    }
+    catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error in fetching homepage posts",
+            error: error.message
         });
     }
 }

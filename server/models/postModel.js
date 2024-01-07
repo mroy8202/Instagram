@@ -7,10 +7,6 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Like",
@@ -19,9 +15,12 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
     }],
-    postedBy: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "User"
+    },
+    postedBy: {
+        type: String,
     },
     postPicturePublicId: {
         type: String,

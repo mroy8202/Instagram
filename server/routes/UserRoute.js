@@ -8,7 +8,6 @@ const { auth } = require("../middlewares/auth");
 // route handlers
 router.post("/signup", signup);
 router.post("/login", login);
-
 router.post("/changePassword", auth, changePassword);
 
 
