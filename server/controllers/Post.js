@@ -42,7 +42,7 @@ exports.createPost = async (req, res) => {
 
         // upload image to cloudinary
         const image = await uploadImageToCloudinary(photo, process.env.FOLDER_NAME);
-        console.log("image: ", image);
+        // console.log("image: ", image);
 
         // create entry in Post database
         const post = await Post.create({
@@ -50,7 +50,7 @@ exports.createPost = async (req, res) => {
             postedBy: userId,
             postPicturePublicId: image.public_id,
         });
-        console.log("POST DETAILS: ", post);
+        // console.log("POST DETAILS: ", post);
 
         // add the new post to the user schema
         await User.findByIdAndUpdate(
@@ -86,7 +86,7 @@ exports.deletePost = async (req, res) => {
 
         // validation on data
         const post = await Post.findById(postId);
-        console.log("POST: ", post);
+        // console.log("POST: ", post);
         if(!post) {
             return res.status(401).json({
                 success: false,
@@ -96,7 +96,7 @@ exports.deletePost = async (req, res) => {
 
         // check if the user id authorized to delete post
         const userId = req.user.id;
-        console.log("USER ID: ", userId);
+        // console.log("USER ID: ", userId);
         if(!userId) {
             return res.status(401).json({
                 success: false,
@@ -111,7 +111,6 @@ exports.deletePost = async (req, res) => {
             });
         }
         
-        console.log("post ka public id: ", post.postPicturePublicId);
         // delete post picture from cloudinary
         try {
             await Cloudinary.uploader.destroy(post.postPicturePublicId);
@@ -127,7 +126,7 @@ exports.deletePost = async (req, res) => {
 
         // delete the post
         const deletedPost = await Post.findByIdAndDelete(postId);
-        console.log("DELETED POST: ", deletedPost);
+        // console.log("DELETED POST: ", deletedPost);
 
         // remove the post from user post array
         const userPost = await User.findByIdAndUpdate(
@@ -151,6 +150,41 @@ exports.deletePost = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "cannot delete post"
+        });
+    }
+}
+
+// getAllUserPost
+exports.getAllUserPost = async (req, res) => {
+    try {
+        // fetch user id
+        const userId = req.user.id;
+        // const user = await User.findById(userId);
+
+        // validation on data
+        if(!userId) {
+            return res.status(401).json({
+                success: false,
+                message: "User not found",
+                error: error.message
+            });
+        }
+
+        // show all post
+        const userPost = await User.findById(userId).populate("posts").exec();
+
+        // return a successfull response
+        return res.status(401).json({
+            success: true,
+            message: "User post fetched successfully",
+            data: userPost,
+        });
+    }
+    catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "Cannot fetch all the posts",
+            error: error.message,
         });
     }
 }
