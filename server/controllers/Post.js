@@ -1,5 +1,6 @@
 // import 
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const Cloudinary = require("cloudinary").v2;
 const User = require("../models/userModel");
 const Post = require("../models/postModel");
 
@@ -12,7 +13,6 @@ exports.createPost = async (req, res) => {
     try {
         // fetch userid
         const userId = req.user.id;
-        const username = req.user.username;
 
         // fetch profile
         const user = await User.findById(userId);
@@ -27,7 +27,7 @@ exports.createPost = async (req, res) => {
 
         // fetch image
         const photo = req.files.postPicture;
-        console.log("photo: ", photo);
+        // console.log("photo: ", photo);
 
         // validation on image
         const supportedTypes = ["jpg", "jpeg", "png"];
@@ -46,11 +46,11 @@ exports.createPost = async (req, res) => {
 
         // create entry in Post database
         const post = await Post.create({
-            userImage: user.profilePicture,
-            username: username,
             postPicture: image.secure_url,
             postedBy: userId,
+            postPicturePublicId: image.public_id,
         });
+        console.log("POST DETAILS: ", post);
 
         // add the new post to the user schema
         await User.findByIdAndUpdate(
@@ -80,22 +80,71 @@ exports.createPost = async (req, res) => {
 // deletePost
 exports.deletePost = async (req, res) => {
     try {
-        // fetch post id
+        // fetch post id from req.params
         const postId = req.params.id;
+        // console.log("POST ID: ", postId);
 
-        // const post = await Post.findById(postId);
+        // validation on data
+        const post = await Post.findById(postId);
+        console.log("POST: ", post);
+        if(!post) {
+            return res.status(401).json({
+                success: false,
+                message: "Post not found with given postID",
+            });
+        }
 
-        // delete post picture from Cloudinary
+        // check if the user id authorized to delete post
+        const userId = req.user.id;
+        console.log("USER ID: ", userId);
+        if(!userId) {
+            return res.status(401).json({
+                success: false,
+                message: "User not logged in",
+            });
+        }
+        
+        if(userId !== post.postedBy.toString()) {
+            return res.status(401).json({
+                success: false,
+                message: "user is not authorized to delete the post",
+            });
+        }
+        
+        console.log("post ka public id: ", post.postPicturePublicId);
+        // delete post picture from cloudinary
+        try {
+            await Cloudinary.uploader.destroy(post.postPicturePublicId);
+        }
+        catch(error) {
+            return res.status(401).json({
+                success: false,
+                message: "Error in deleting image from cloudinary",
+                error: error.message
+            });
+        }
         
 
-        // delete post
-        const postToBeDeleted = await Post.findByIdAndDelete(postId);
+        // delete the post
+        const deletedPost = await Post.findByIdAndDelete(postId);
+        console.log("DELETED POST: ", deletedPost);
 
-        // return successfull response
+        // remove the post from user post array
+        const userPost = await User.findByIdAndUpdate(
+            userId,
+            {
+                $pull: {
+                    posts: postId,
+                }
+            },
+            {new: true}
+        );
+
+        // return a successfull response
         return res.status(200).json({
             success: true,
             message: "Post deleted successfully",
-            data: postToBeDeleted,
+            post: deletedPost
         });
     }
     catch(error) {

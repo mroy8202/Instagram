@@ -22,6 +22,9 @@ const postSchema = new mongoose.Schema({
     postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+    },
+    postPicturePublicId: {
+        type: String,
     }
 }, { timestamps: true });
 

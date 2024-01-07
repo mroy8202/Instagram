@@ -8,7 +8,7 @@ const { likePost } = require("../controllers/Like");
 
 // route handler
 router.post("/createPost", auth, createPost);
-router.post("/deletePost/:id", auth, deletePost);
+router.delete("/deletePost/:id", auth, deletePost);
 router.post("/likePost", auth, likePost);
 
 // export
