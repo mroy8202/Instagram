@@ -105,7 +105,9 @@ exports.deletePost = async (req, res) => {
             });
         }
         
-        if(userId !== post.user._id) {
+        console.log("USER ID: ", userId, "  TYPE: ", typeof(userId));
+        console.log("POST USER ID: ", post.user._id, "  TYPE: ", typeof(post.user._id.toString()));
+        if(userId !== post.user._id.toString()) {
             return res.status(401).json({
                 success: false,
                 message: "user is not authorized to delete the post",

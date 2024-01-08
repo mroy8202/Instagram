@@ -2,6 +2,7 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Post = require("../models/postModel");
 require("dotenv").config();
 
 // signup
@@ -187,5 +188,51 @@ exports.changePassword = async (req, res) => {
         });
     }
 }
+
+// deleteUser
+// exports.deleteUser = async (req, res) => {
+//     try {
+//         // fetch user id
+//         const userId = req.user.id;
+
+//         // validation on data
+//         if(!userId) {
+//             return res.status(401).json({
+//                 success: false,
+//                 message: "user id not found",
+//                 error: error.message
+//             });
+//         }
+
+//         // validation on user
+//         const user = await User.findById(userId);
+//         if(!user) {
+//             return res.status(500).json({
+//                 success: false,
+//                 message: "user not found",
+//                 error: error.message
+//             });
+//         }
+
+//         // update user's follower's and following
+
+//         // remove all users like and comments
+        
+//         // delete user's post
+        
+
+//         // delete user
+
+//         // return a successfull response
+
+//     }
+//     catch(error) {
+//         return res.status(500).json({
+//             success: false,
+//             message: "Cannot delete the user",
+//             error: error.message
+//         });
+//     }
+// }
 
 

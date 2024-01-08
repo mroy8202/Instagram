@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 
 // route handler
 const likeSchema = new mongoose.Schema({
-    user: {
+    user: { // user who liked the comment
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Post",
     },
-    post: {
+    post: { // post which is liked
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
     }
