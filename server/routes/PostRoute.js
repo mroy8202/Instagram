@@ -10,7 +10,6 @@ const { createComment } = require("../controllers/Comment");
 // route handler
 router.post("/createPost", auth, createPost);
 router.delete("/deletePost/:id", auth, deletePost);
-router.post("/likePost", auth, likePost);
 router.get("/getMyPost", auth, getMyPost);
 router.get("/getHomepagePost", auth, getHomepagePost);
 

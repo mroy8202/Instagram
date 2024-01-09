@@ -1,10 +1,14 @@
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import Signup from './pages/Signup';
 
 function App() {
   return (
-    <>
-      Welcome to Vite
-    </>
+    <div>
+      <Routes>
+        <Route path='/' element={<Signup />} />
+      </Routes>
+    </div>
   );
 }
 
