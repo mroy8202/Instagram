@@ -9,9 +9,9 @@ import { apiConnector } from "../apiconnector";
 // endpoints
 const { SIGNUP_API, LOGIN_API, CHANGE_PASSWORD_API } = authEndpoints;
 
-export function signUp(name, email, username, password, navigate) {
+export function signUp({name, email, username, password}, navigate) {
     return async (dispatch) => {
-        const toastId = toast.loading("Loading...");
+        // const toastId = toast.loading("Loading...");
         dispatch(setLoading(true));
         try {
             const response = await apiConnector("POST", SIGNUP_API, { name, email, username, password });
@@ -26,10 +26,10 @@ export function signUp(name, email, username, password, navigate) {
         catch(error) {
             console.log("SIGNUP_API error... ", error);
             toast.error("Signup failed");
-            navigate("/signup");
+            navigate("/");
         }
         dispatch(setLoading(false));
-        toast.dismiss(toastId);
+        // toast.dismiss(toastId);
     }
 }
 
