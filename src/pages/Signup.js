@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import logo from "../assets/Instagram-Logo.png"
 import { useDispatch } from 'react-redux';
-// import { setSignupData } from '../redux/slices/authSlice';
 import { signUp } from '../services/operations/authAPI';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -123,7 +122,6 @@ const Signup = () => {
             </Link>
         </div>
     </div>
-    
   )
 }
 

@@ -11,7 +11,6 @@ const { SIGNUP_API, LOGIN_API, CHANGE_PASSWORD_API } = authEndpoints;
 
 export function signUp({name, email, username, password}, navigate) {
     return async (dispatch) => {
-        // const toastId = toast.loading("Loading...");
         dispatch(setLoading(true));
         try {
             const response = await apiConnector("POST", SIGNUP_API, { name, email, username, password });
@@ -29,13 +28,11 @@ export function signUp({name, email, username, password}, navigate) {
             navigate("/");
         }
         dispatch(setLoading(false));
-        // toast.dismiss(toastId);
     }
 }
 
-export function login(email, password, navigate) {
+export function login({email, password}, navigate) {
     return async(dispatch) => {
-        const toastId = toast.loading("Loading...");
         dispatch(setLoading(true));
         try {
             const response = await apiConnector("POST", LOGIN_API, { email, password });
@@ -57,7 +54,6 @@ export function login(email, password, navigate) {
             toast.error("Login failed");
         }
         dispatch(setLoading(false));
-        toast.dismiss(toastId);
     }
 }
 
