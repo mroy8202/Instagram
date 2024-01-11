@@ -2,12 +2,12 @@
 import toast from "react-hot-toast";
 import { authEndpoints } from "../apis";
 import { setLoading, setToken } from "../../redux/slices/authSlice";
-import { setUser } from "../../redux/slices/profileSlice";
+import { setUser, setSearchUsers } from "../../redux/slices/profileSlice";
 import { apiConnector } from "../apiconnector";
 
 
 // endpoints
-const { SIGNUP_API, LOGIN_API, CHANGE_PASSWORD_API } = authEndpoints;
+const { SIGNUP_API, LOGIN_API, CHANGE_PASSWORD_API, SEARCH_USER_API } = authEndpoints;
 
 export function signUp({name, email, username, password}, navigate) {
     return async (dispatch) => {
@@ -47,6 +47,7 @@ export function login({email, password}, navigate) {
             dispatch(setToken(response.data.token));
             dispatch(setUser(response.data.user));
             localStorage.setItem("token", JSON.stringify(response.data.token));
+            localStorage.setItem("user", JSON.stringify(response.data.user));
             navigate("/"); // TODO: define where should we navigate after user is logged in
         }
         catch(error) {
@@ -67,7 +68,7 @@ export function logout(navigate) {
     };
 }
 
-export function changePassword(currentPassword, newPassword, confirmNewPassword,  navigate) {
+export function changePassword({currentPassword, newPassword, confirmNewPassword},  navigate) {
     return async (dispatch) => {
         const toastId = toast.loading("Loading...");
         dispatch(setLoading(true));
@@ -95,5 +96,24 @@ export function changePassword(currentPassword, newPassword, confirmNewPassword,
         }
         dispatch(setLoading(false));
         toast.dismiss(toastId);
+    }
+}
+
+export function searchUser({searchUserText}, navigate) {
+    return async (dispatch) => {
+        try {
+            const response = await apiConnector("GET", SEARCH_USER_API, {searchUserText});
+
+            console.log("SEARCH API RESPONSE: ", response);
+            if (!response.data.success) {
+                throw new Error(response.data.message);
+            }
+
+            dispatch(setSearchUsers(response.data.users));
+            // navigate("")''
+        }
+        catch(error) {
+            console.log("ERROR:-> ", error);
+        }
     }
 }

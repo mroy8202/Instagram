@@ -236,3 +236,46 @@ exports.changePassword = async (req, res) => {
 // }
 
 
+exports.searchUser = async (req, res) => {
+    try {
+        // fetch data
+        const searchText = req.body;
+
+        if(!searchText) {
+            return res.status(400).json({
+                success: false,
+                message: "Search text is required",
+            });
+        }
+
+        // search users
+        const users = await User.find({
+            $or: [
+                {name: { $regex: searchText, $options: "i"}},
+                {username: { $regex: searchText, $options: "i"}},
+            ]
+        });
+
+        // extract relevant information for the response
+        const filteredUsers = users.map( user => ({
+            _id: user._id,
+            name: user.name,
+            profilePicture: user.profilePicture,
+        }));
+
+        // return a successfull response
+        return res.status(200).json({
+            success: true,
+            message: "users filtered successfully",
+            users: filteredUsers,
+        });
+    }
+    catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error in searching user",
+            error: error.message,
+        });
+    }
+}
+

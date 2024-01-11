@@ -5,6 +5,7 @@ export const authEndpoints = {
     SIGNUP_API: BASE_URL + "/auth/signup",
     LOGIN_API: BASE_URL + "/auth/login",
     CHANGE_PASSWORD_API: BASE_URL + "/auth/changePassword",
+    SEARCH_USER_API: BASE_URL + "/auth/searchUser"
 }
 
 // Post Endpoints
