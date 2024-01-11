@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     loading: false,
-    searchUsers: [],
 }
 
 // create slice
@@ -18,11 +17,8 @@ const profileSlice = createSlice({
         setLoading(state, value) {
             state.loading = value.payload;
         },
-        setSearchUsers(state, value) {
-            state.searchUsers = value.payload;
-        }
     }
 });
 
-export const { setUser, setLoading, setSearchUsers } = profileSlice.actions;
+export const { setUser, setLoading } = profileSlice.actions;
 export default profileSlice.reducer;

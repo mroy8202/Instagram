@@ -3,9 +3,10 @@ import './App.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import OpenRoute from './components/OpenRoute';
-// import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar/Navbar';
 import { useSelector } from 'react-redux';
+import Homepage from './pages/Homepage';
 
 
 
@@ -39,6 +40,14 @@ function App() {
           }
         />
 
+        {/* homepage */}
+        <Route path='/user/homepage'
+          element={
+            <PrivateRoute>
+              <Homepage />
+            </PrivateRoute>
+          }
+        />
         
 
       </Routes>

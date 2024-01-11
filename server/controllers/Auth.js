@@ -239,9 +239,11 @@ exports.changePassword = async (req, res) => {
 exports.searchUser = async (req, res) => {
     try {
         // fetch data
-        const searchText = req.body;
+        const searchUserText = req.body;
+        console.log("req.body: ", req.body);
+        console.log("searchText: ", searchUserText);
 
-        if(!searchText) {
+        if(!searchUserText) {
             return res.status(400).json({
                 success: false,
                 message: "Search text is required",
@@ -251,8 +253,8 @@ exports.searchUser = async (req, res) => {
         // search users
         const users = await User.find({
             $or: [
-                {name: { $regex: searchText, $options: "i"}},
-                {username: { $regex: searchText, $options: "i"}},
+                {name: { $regex: searchUserText, $options: "i"}},
+                {username: { $regex: searchUserText, $options: "i"}},
             ]
         });
 
