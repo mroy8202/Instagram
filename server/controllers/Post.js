@@ -18,6 +18,16 @@ exports.createPost = async (req, res) => {
         // fetch profile
         const user = await User.findById(userId);
 
+        // fetch title
+        const {title} = req.body;
+
+        if(!title) {
+            return res.status(500).json({
+                success: false,
+                message: "Title is missing"
+            });
+        }
+
         if(!user) {
             return res.status(404).json({
                 success: false,
@@ -51,6 +61,7 @@ exports.createPost = async (req, res) => {
             user: user,
             postedBy: user.username,
             postPicturePublicId: image.public_id,
+            title: title
         });
         // console.log("POST DETAILS: ", post);
 

@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 
 // route handler
 const postSchema = new mongoose.Schema({
+    title : {
+        type: String,
+        required: true,
+    },
     postPicture: {
         type: String,
         required: true,

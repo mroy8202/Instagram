@@ -1,7 +1,6 @@
 const User = require("../models/userModel");
 const Post = require("../models/postModel");
 const Like = require("../models/likeModel");
-const { default: mongoose } = require("mongoose");
 
 exports.likePost = async (req, res) => {
     try {
@@ -15,7 +14,6 @@ exports.likePost = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "validation failed on either userId or post id",
-                error: error.message,
             });
         }
 
@@ -25,7 +23,6 @@ exports.likePost = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "User cannot be fetched",
-                error: error.message,
             });
         }
 
@@ -34,7 +31,6 @@ exports.likePost = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "Post cannot be fetched",
-                error: error.message,
             });
         }
 
@@ -76,7 +72,7 @@ exports.likePost = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Post liked successfully",
-            data: updatedLikesOnPost
+            data: likedPost
         });
     }
     catch(error) {
@@ -101,7 +97,6 @@ exports.unlikePost = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "validation failed on either userId or post id",
-                error: error.message,
             });
         }
 
@@ -111,7 +106,6 @@ exports.unlikePost = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "User cannot be fetched",
-                error: error.message,
             });
         }
 
@@ -120,7 +114,6 @@ exports.unlikePost = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "Post cannot be fetched",
-                error: error.message,
             });
         }
 

@@ -7,7 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar/Navbar';
 import { useSelector } from 'react-redux';
 import Homepage from './pages/Homepage';
-
+import Spinner from "./components/Spinner"
 
 
 function App() {

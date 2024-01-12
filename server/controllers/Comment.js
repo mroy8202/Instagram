@@ -11,17 +11,16 @@ exports.createComment = async (req, res) => {
         const userId = req.user.id;
         const { commentText } = req.body;
 
-        console.log("POST ID: ", postId);
-        console.log("USER ID: ", userId);
-        console.log("COMMENT TEXT: ", commentText);
-        console.log("COMMENT TEXT KA TYPE: ", typeof(commentText));
+        // console.log("POST ID: ", postId);
+        // console.log("USER ID: ", userId);
+        // console.log("COMMENT TEXT: ", commentText);
+        // console.log("COMMENT TEXT KA TYPE: ", typeof(commentText));
 
         // validation
         if(!postId || !userId) {
             return res.status(401).json({
                 success: false,
                 message: "cannot fetch either postId or userId",
-                error: error.message,
             });
         }
 
@@ -31,7 +30,6 @@ exports.createComment = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "User not found",
-                error: error.message,
             });
         };
 
@@ -40,7 +38,6 @@ exports.createComment = async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "Post not found",
-                error: error.message,
             });
         }
 
@@ -64,7 +61,7 @@ exports.createComment = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Comment created successfully",
-            data: updatedCommentInPost,
+            data: newComment,
         });
 
     }

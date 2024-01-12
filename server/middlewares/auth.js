@@ -24,7 +24,8 @@ exports.auth = async (req, res, next) => {
         catch(err) {
             return res.status(401).json({
                 success: false,
-                message: "Token is invalid"
+                message: "Token is invalid",
+                err: err.message,
             });
         }
 
