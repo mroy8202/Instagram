@@ -13,6 +13,10 @@ const Homepage = () => {
     dispatch(homepagePost(token));
   }, [] );
 
+  const postClichHandler = (post) => {
+    console.log("this is ", post.user.username);
+  }
+
   return (
     <div className=''>
       <div className='w-8/12 mx-auto flex flex-col'>
@@ -21,7 +25,7 @@ const Homepage = () => {
           ? <Spinner />
           : 
           homepagePosts.map( (post) => (
-            <div key={post._id}>
+            <div key={post._id} onClick={() => postClichHandler(post)}>
               <Post post={post} />
             </div>
           ) )
