@@ -34,10 +34,10 @@ export function homepagePost(token) {
             const posts = response.data.data;
             posts.map(post => (allPosts.push(post)));
 
-            console.log("ALL POSTS: ", allPosts);
+            // console.log("ALL POSTS: ", allPosts);
 
             await dispatch(setHomePagePosts(allPosts));
-            toast.success("ALL HOMEPAGE POSTS FETCHED");
+            // toast.success("ALL HOMEPAGE POSTS FETCHED");
         }
         catch(error) {
             console.log('ERROR IN GETTING POST: ', error);
@@ -53,7 +53,7 @@ export function myPost(token) {
             const response = await apiConnector("GET", MY_POST_API, null, {
                 Authorization: `Bearer ${token}`
             })
-            console.log("MY POST API RESPONSE: ", response);
+            // console.log("MY POST API RESPONSE: ", response);
 
             if (!response.data.success) {
                 throw new Error(response.data.message)
@@ -62,10 +62,10 @@ export function myPost(token) {
             const myAllPosts = [];
             const posts = response.data.data.posts;
             posts.map((post) => (myAllPosts.push(post)));
-            console.log("ALL POSTS: ", myAllPosts);
+            // console.log("ALL POSTS: ", myAllPosts);
 
             await dispatch(setMyPosts(myAllPosts));
-            toast.success("My Post Fetched Successfully");
+            // toast.success("My Post Fetched Successfully");
         }
         catch(error) {
             console.log("errorrrr....", error);

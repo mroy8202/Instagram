@@ -5,7 +5,6 @@ import { FcDislike } from "react-icons/fc";
 import { FaRegComment } from "react-icons/fa";
 
 const Post = ({post}) => {
-    console.log("POST: ", post);
   return (
     <div>
         {/* post head */}

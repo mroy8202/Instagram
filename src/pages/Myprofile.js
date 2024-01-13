@@ -72,7 +72,7 @@ const Myprofile = () => {
                     <div className='w-8/12 mx-auto'>
                         {
                             myPosts.map( (post) => (
-                                <Post post={post} />
+                                <Post key={post._id} post={post} />
                             ) )
                         }
                     </div>

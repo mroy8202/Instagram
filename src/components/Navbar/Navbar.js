@@ -15,7 +15,6 @@ const Navbar = () => {
 
     const profileButtonHandler = () =>  {
         setShowProfileMenu(!showProfileMenu);
-        console.log("button clicked")
     }
 
     const logoutHandler = () => {
