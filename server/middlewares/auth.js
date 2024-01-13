@@ -9,7 +9,7 @@ exports.auth = async (req, res, next) => {
         // console.log("TOKEN -----> ", token);
         // validate token
         if(!token || token === undefined) {
-            return res.status(401).json({
+            return res.status(400).json({
                 success: false,
                 message: "Token is missing"
             });
@@ -22,7 +22,7 @@ exports.auth = async (req, res, next) => {
             req.user = decoded;
         }
         catch(err) {
-            return res.status(401).json({
+            return res.status(400).json({
                 success: false,
                 message: "Token is invalid",
                 err: err.message,
@@ -32,7 +32,7 @@ exports.auth = async (req, res, next) => {
         next();
     }
     catch(error) {
-        return res.status(401).json({
+        return res.status(400).json({
             success: false,
             message: "Something went wrong while validating the token",
             error: error.message

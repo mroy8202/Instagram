@@ -58,12 +58,13 @@ export function login({email, password}, navigate) {
 }
 
 export function logout(navigate) {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(setToken(null));
+        dispatch(setUser(null));
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         toast.success("Logged Out");
-        navigate("/"); // TODO: define where should we navigate after user is logged out
+        navigate("/login"); // TODO: define where should we navigate after user is logged out
     };
 }
 

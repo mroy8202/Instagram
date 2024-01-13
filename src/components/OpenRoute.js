@@ -8,7 +8,7 @@ const OpenRoute = ({children}) => {
         return children;
     }
     else {
-        return <Navigate to="/"/> // TODO: navigate to user profile
+        return <Navigate to="/user/homepage"/> // TODO: navigate to user profile
     }
 }
 

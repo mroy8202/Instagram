@@ -28,7 +28,7 @@ const postSchema = new mongoose.Schema({
     },
     postPicturePublicId: {
         type: String,
-    }
+    },
 }, { timestamps: true });
 
 // export 

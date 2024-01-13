@@ -174,13 +174,13 @@ exports.getMyPost = async (req, res) => {
     try {
         // fetch user id
         const userId = req.user.id;
-
+        console.log("req user: ", req.user);
+    
         // validation on data
         if(!userId) {
-            return res.status(401).json({
+            return res.status(400).json({
                 success: false,
                 message: "User not found",
-                error: error.message
             });
         }
 
@@ -188,7 +188,7 @@ exports.getMyPost = async (req, res) => {
         const userPost = await User.findById(userId).populate("posts").exec();
 
         // return a successfull response
-        return res.status(401).json({
+        return res.status(200).json({
             success: true,
             message: "User post fetched successfully",
             data: userPost,

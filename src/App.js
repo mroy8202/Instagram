@@ -7,7 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar/Navbar';
 import { useSelector } from 'react-redux';
 import Homepage from './pages/Homepage';
-import Spinner from "./components/Spinner"
+import Myprofile from './pages/Myprofile';
 
 
 function App() {
@@ -45,6 +45,15 @@ function App() {
           element={
             <PrivateRoute>
               <Homepage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* My profile */}
+        <Route path='/user/profile' 
+          element={
+            <PrivateRoute>
+              <Myprofile />
             </PrivateRoute>
           }
         />

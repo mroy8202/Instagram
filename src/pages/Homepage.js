@@ -7,16 +7,11 @@ import Spinner from "../components/Spinner"
 const Homepage = () => {
   const dispatch = useDispatch();
   const { homepagePosts } = useSelector((state) => state.profile);
+  const { token } = useSelector((state) => state.auth);
 
   useEffect( () => {
-    const token = JSON.parse(localStorage.getItem("token"));
     dispatch(homepagePost(token));
   }, [] );
-
-  // useEffect(() => {
-  //   console.log("HOMEPAGE POSTS: ", homepagePosts);
-  // })
-
 
   return (
     <div className=''>
