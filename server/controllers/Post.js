@@ -173,11 +173,11 @@ exports.deletePost = async (req, res) => {
 exports.getMyPost = async (req, res) => {
     try {
         // fetch user id
-        const userId = req.user.id;
-        console.log("req user: ", req.user);
+        const username = req.user.username;
+        // console.log("req user: ", req.user);
     
         // validation on data
-        if(!userId) {
+        if(!username) {
             return res.status(400).json({
                 success: false,
                 message: "User not found",
@@ -185,7 +185,7 @@ exports.getMyPost = async (req, res) => {
         }
 
         // show all post
-        const userPost = await User.findById(userId).populate("posts").exec();
+        const userPost = await Post.find({postedBy: username}).populate("user").exec();
 
         // return a successfull response
         return res.status(200).json({
