@@ -13,7 +13,7 @@ export const postEndpoints = {
     DELETE_POST_API: BASE_URL + "/post/deletePost", // id in params
     MY_POST_API: BASE_URL + "/post/getMyPost",
     HOMEPAGE_POST_API: BASE_URL + "/post/getHomepagePost",
-    LIKE_POST_API: BASE_URL + "/post/likePost", // id in params
-    UNLIKE_POST_API: BASE_URL + "/post/unlikePost", // id in params
+    LIKE_POST_API: BASE_URL + "/post/likePost",
+    UNLIKE_POST_API: BASE_URL + "/post/unlikePost",
     CREATE_COMMENT_API: BASE_URL + "/post/createComment", // id in params
 }

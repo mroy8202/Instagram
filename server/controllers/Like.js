@@ -5,10 +5,12 @@ const Like = require("../models/likeModel");
 exports.likePost = async (req, res) => {
     try {
         // fetch postId and userId
-        const postId = req.params.id;
-        // const postId = req.body;
+        // const postId = req.params.id;
+        const { postId } = req.body;
         const userId = req.user.id;
 
+        // console.log('POSTID.... ', postId);
+        // console.log('USERID... ', userId);
         // validation
         if(!postId || !userId) {
             return res.status(401).json({
@@ -88,8 +90,8 @@ exports.likePost = async (req, res) => {
 exports.unlikePost = async (req, res) => {
     try {
         // fetch postId and userId
-        const postId = req.params.id;
-        // const postId = req.body;
+        // const postId = req.params.id;
+        const {postId} = req.body;
         const userId = req.user.id;
 
         // validation

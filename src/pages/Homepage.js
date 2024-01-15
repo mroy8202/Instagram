@@ -14,7 +14,7 @@ const Homepage = () => {
   }, [] );
 
   const postClichHandler = (post) => {
-    console.log("this is ", post.user.username);
+    // console.log("this is ", post.user.username);
   }
 
   return (

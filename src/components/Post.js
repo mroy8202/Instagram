@@ -1,10 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsThreeDots } from "react-icons/bs";
-import { FcLike } from "react-icons/fc";
-import { FcDislike } from "react-icons/fc";
+import { AiFillLike } from "react-icons/ai";
+import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { likePost, unlikePost } from '../services/operations/postAPI';
 
 const Post = ({post}) => {
+
+    const dispatch = useDispatch();
+    const { user } = useSelector( (state) => state.profile );
+    const { token } = useSelector( (state) => state.auth );
+
+    const [isLiked, setIsLiked] = useState(post.likes.includes(user._id));
+    // const [likesCount, setLikesCount] = useState(post.likes.length);
+    // const [currState, setCurrState] = useState(false);  
+
+    const LikeHandler = () => {
+        const postId = post._id; 
+        dispatch(likePost(postId, token));
+        setIsLiked(true);
+        // setLikesCount(currState + 1);
+        // setCurrState(true);
+    }
+
+    const UnLikeHandler = () => {
+        console.log("unlike handler clicked ", post);
+        const postId = post._id;
+        dispatch(unlikePost(postId, token));
+        setIsLiked(false);
+        // setLikesCount(currState - 1);
+        // setCurrState(true);
+    }
+
+    
+
   return (
     <div>
         {/* post head */}
@@ -43,12 +73,22 @@ const Post = ({post}) => {
             <div className='min-h-24'>
                 {/* icons */}
                 <div className='flex flex-row gap-4 pl-4 pr-4'>
-                    <FcLike 
-                        className="h-10 w-10"
-                    />
-                    {/* <FcDislike 
-                        className="h-10 w-10"
-                    /> */}
+                    {isLiked ? 
+                    (
+                        <AiFillLike  
+                            onClick={LikeHandler}
+                            className="h-10 w-10"
+                        />
+                    ) 
+                    : 
+                    (
+                        <AiOutlineLike  
+                            onClick={UnLikeHandler}
+                            className="h-10 w-10"
+                        />
+                    )}
+                    
+                    
                     <FaRegComment 
                         className="h-10 w-10"
                     />
