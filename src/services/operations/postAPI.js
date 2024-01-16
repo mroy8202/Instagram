@@ -2,7 +2,7 @@
 import { apiConnector } from "../apiconnector";
 import { postEndpoints } from "../apis";
 import toast from "react-hot-toast";
-import { setHomePagePosts, setMyPosts } from "../../redux/slices/profileSlice";
+import { setHomePagePosts, setMyPosts, setCurrentPost } from "../../redux/slices/profileSlice";
 
 
 
@@ -139,7 +139,7 @@ export function createComment(postId, text, token) {
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
-
+            await dispatch(setCurrentPost(response.data.data));
             toast.success("Comment created");
         }
         catch(error) {

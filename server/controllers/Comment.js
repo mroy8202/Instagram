@@ -8,9 +8,9 @@ exports.createComment = async (req, res) => {
         const userId = req.user.id;
         const { text } = req.body;
 
-        console.log("POST ID: ", postId);
-        console.log("USER ID: ", userId);
-        console.log("COMMENT TEXT: ", text);
+        // console.log("POST ID: ", postId);
+        // console.log("USER ID: ", userId);
+        // console.log("COMMENT TEXT: ", text);
 
         // validation
         if(!postId || !userId) {
@@ -34,13 +34,15 @@ exports.createComment = async (req, res) => {
             {new: true},
         ).populate("comments.user").exec();
 
-        console.log("UpdatedPost: ", updatedCommentInPost.comments);
+        const updatedPost = await Post.findById(postId).populate("user").populate("likes").populate("comments.user").exec();
+
+        // console.log("UpdatedPost: ", updatedCommentInPost.comments);
 
         // return a successfull response
         return res.status(200).json({
             success: true,
             message: "Comment created successfully",
-            data: updatedCommentInPost.comments,
+            data: updatedPost,
         });
     }
     catch(error) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createComment } from '../services/operations/postAPI';
 
@@ -6,9 +6,14 @@ const ExpandPost = () => {
     
     const dispatch = useDispatch();
     const { currentPost } = useSelector((state) => state.profile);
-    console.log("My current post is: ", currentPost);
+    // console.log("My current post is: ", currentPost);
     const {token} = useSelector((state) => state.auth);
     const [text, setText] = useState('');
+    // const [comments, setComments] = useState(currentPost.comments);
+
+    // useEffect(() => {
+    //     setComments(currentPost.comments);
+    //   }, [currentPost.comments]);
 
     const commentHandler = (e) => {
         e.preventDefault();
