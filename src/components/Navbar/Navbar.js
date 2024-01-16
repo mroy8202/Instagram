@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import logo from "../../assets/Instagram-Logo.png"
 import { FaPlusSquare } from "react-icons/fa";
-import { FiHeart } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/operations/authAPI';
@@ -25,6 +24,10 @@ const Navbar = () => {
     const MyProfileHandler = () => {
         setShowProfileMenu(false);
     } 
+
+    const createPostHandler = () => {
+        navigate("/user/createPost");
+    }
 
   return (
     <div>
@@ -54,13 +57,7 @@ const Navbar = () => {
                     {/* create post */}
                     <div>
                         <FaPlusSquare 
-                            className='h-10 w-10 cursor-pointer'
-                        />
-                    </div>
-
-                    {/* notifications */}
-                    <div>
-                        <FiHeart 
+                            onClick={createPostHandler}
                             className='h-10 w-10 cursor-pointer'
                         />
                     </div>

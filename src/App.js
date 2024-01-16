@@ -10,6 +10,7 @@ import Homepage from './pages/Homepage';
 import Myprofile from './pages/Myprofile';
 import ExpandPost from './components/ExpandPost';
 import ExpandLikes from './components/ExpandLikes';
+import Create from './pages/Create';
 
 function App() {
   const location = useLocation();
@@ -78,6 +79,15 @@ function App() {
           element={
             <PrivateRoute>
               <ExpandLikes />
+            </PrivateRoute>
+          } 
+        />
+
+        {/* create post */}
+        <Route path='/user/createPost'
+          element={
+            <PrivateRoute>
+              <Create />
             </PrivateRoute>
           } 
         />

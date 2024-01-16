@@ -9,7 +9,7 @@ function isFileTypeSupported(photoType, supportedTypes) {
 }
 
 // createPost
-// TODO: when deleting the post, delete the likes and comments assciated to it
+// TODO: when deleting the post, delete the likes and comments associated to it
 exports.createPost = async (req, res) => {
     try {
         // fetch userid

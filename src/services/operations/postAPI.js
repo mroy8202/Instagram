@@ -8,7 +8,7 @@ import { setHomePagePosts, setMyPosts, setCurrentPost, setLikes } from "../../re
 
 // endpoints
 const {
-    // CREATE_POST_API,
+    CREATE_POST_API,
     // DELETE_POST_API,
     MY_POST_API,
     HOMEPAGE_POST_API,
@@ -167,6 +167,30 @@ export function viewLikes(postId, token) {
         catch(error) {
             console.log("Error in viewing likes from client side... ", error);
             toast.error("error");
+        }
+    }
+}
+
+// createPost api
+export function createPost(formData, token, navigate) {
+    return async (dispatch) => {
+        try {
+            const response = await apiConnector("POST", CREATE_POST_API, formData, {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data", // Set content type to handle files
+            });
+            // console.log('RESPONSE -> ', response);
+            if (!response.data.success) {
+                throw new Error(response.data.message);
+            }
+
+            // const createPost = response.data.data;
+            toast.success("cool");
+            navigate("/user/homepage");
+        }
+        catch(error) {
+            console.log("Error from client side... ", error);
+            toast.error("cannot create post");
         }
     }
 }

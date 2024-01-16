@@ -9,11 +9,6 @@ const ExpandPost = () => {
     // console.log("My current post is: ", currentPost);
     const {token} = useSelector((state) => state.auth);
     const [text, setText] = useState('');
-    // const [comments, setComments] = useState(currentPost.comments);
-
-    // useEffect(() => {
-    //     setComments(currentPost.comments);
-    //   }, [currentPost.comments]);
 
     const commentHandler = (e) => {
         e.preventDefault();
