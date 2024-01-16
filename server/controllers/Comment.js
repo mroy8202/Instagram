@@ -1,20 +1,16 @@
-const User = require("../models/userModel");
 const Post = require("../models/postModel");
-const Comment = require("../models/commentModel");
 
 // createComment
 exports.createComment = async (req, res) => {
     try {
         // fetch postId and userId and commentText
-        // const { postId }= req.body;
-        const postId = req.params.id;
+        const { postId }= req.body;
         const userId = req.user.id;
-        const { commentText } = req.body;
+        const { text } = req.body;
 
-        // console.log("POST ID: ", postId);
-        // console.log("USER ID: ", userId);
-        // console.log("COMMENT TEXT: ", commentText);
-        // console.log("COMMENT TEXT KA TYPE: ", typeof(commentText));
+        console.log("POST ID: ", postId);
+        console.log("USER ID: ", userId);
+        console.log("COMMENT TEXT: ", text);
 
         // validation
         if(!postId || !userId) {
@@ -24,46 +20,28 @@ exports.createComment = async (req, res) => {
             });
         }
 
-        // fetch user and post
-        const user = await User.findById(userId);
-        if(!user) {
-            return res.status(401).json({
-                success: false,
-                message: "User not found",
-            });
-        };
-
-        const post = await Post.findById(postId);
-        if(!post)  {
-            return res.status(401).json({
-                success: false,
-                message: "Post not found",
-            });
-        }
-
-        // create a comment 
-        const newComment = await Comment.create({
-            user: user,
-            post: post, 
-            commentText: commentText,
-        });
-
         // update comments in postModel
         const updatedCommentInPost = await Post.findByIdAndUpdate(
             postId,
             {
-                $push: {comments: user},
+                $push: {
+                    comments: {
+                        text,
+                        user: userId
+                    },
+                },
             },
             {new: true},
-        );
+        ).populate("comments.user").exec();
+
+        console.log("UpdatedPost: ", updatedCommentInPost.comments);
 
         // return a successfull response
         return res.status(200).json({
             success: true,
             message: "Comment created successfully",
-            data: newComment,
+            data: updatedCommentInPost.comments,
         });
-
     }
     catch(error) {
         return res.status(500).json({

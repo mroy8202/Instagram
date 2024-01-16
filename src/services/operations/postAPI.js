@@ -14,7 +14,7 @@ const {
     HOMEPAGE_POST_API,
     LIKE_POST_API,
     UNLIKE_POST_API,
-    // CREATE_COMMENT_API,
+    CREATE_COMMENT_API,
 } = postEndpoints;
 
 // homepage post api
@@ -120,6 +120,31 @@ export function unlikePost(postId, token) {
         catch(error) {
             console.log("Error in liking post...", error);
             toast.error("like failed");
+        }
+    }
+}
+
+// createComment api
+export function createComment(postId, text, token) {
+    return async(dispatch) => {
+        try {
+            // console.log('POST ID: ', postId);
+            // console.log("TEXT: ", text);
+            // console.log("TOKEN: ", token);
+            const response = await apiConnector("POST", CREATE_COMMENT_API, {postId, text}, {
+                Authorization: `Bearer ${token}`
+            });
+
+            console.log("Response: ", response);
+            if (!response.data.success) {
+                throw new Error(response.data.message)
+            }
+
+            toast.success("Comment created");
+        }
+        catch(error) {
+            console.log("create comment error... ", error);
+            toast.error("error in creating comment")
         }
     }
 }

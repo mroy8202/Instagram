@@ -18,7 +18,7 @@ router.put("/likePost", auth, likePost);
 router.put("/unlikePost", auth, unlikePost);
 
 // Comment routes
-router.post("/createComment/:id", auth, createComment);
+router.post("/createComment", auth, createComment);
 
 // export
 module.exports = router;

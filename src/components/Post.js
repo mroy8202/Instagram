@@ -4,7 +4,8 @@ import { AiFillLike } from "react-icons/ai";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import { likePost, unlikePost } from '../services/operations/postAPI';
+import { likePost, unlikePost, createComment } from '../services/operations/postAPI';
+import { Link } from 'react-router-dom';
 
 const Post = ({post}) => {
 
@@ -14,6 +15,7 @@ const Post = ({post}) => {
 
     const [isLiked, setIsLiked] = useState(post.likes.includes(user._id));
     const [likeCount, setLikeCount] = useState(post.likes.length);
+    const [text, setText] = useState('');
 
     const LikeHandler = () => {
         const postId = post._id; 
@@ -33,11 +35,18 @@ const Post = ({post}) => {
         setLikeCount(post.likes.length);
     }, [post.likes.length])
 
+    const commentHandler = (e) => {
+        e.preventDefault();
+        const postId = post._id;
+        dispatch(createComment(postId, text, token));
+        setText('');
+    }
+
   return (
     <div>
         {/* post head */}
-        <div className='w-[60%]'>
-            <div className='h-12 border border-inherit flex items-center justify-between pl-4 pr-4'>
+        <div className='w-[60%] mb-8 border border-inherit'>
+            <div className='h-12 flex items-center justify-between pl-4 pr-4'>
                 <div className='flex items-center gap-2'>
                     {/* round div to store user profile pic */}
                     <div className='h-10 w-10 rounded-full overflow-hidden'>
@@ -63,7 +72,6 @@ const Post = ({post}) => {
             {/* post picture */}
             <div className='min-h-48'>
                 <img src={post.postPicture} alt='img' loading='lazy'
-                    className=''
                 />
             </div>
 
@@ -111,13 +119,33 @@ const Post = ({post}) => {
 
                 {/* comments */}
                 <div className='pl-4 pr-4'>
-                    
+                    <Link to={"/"}
+                        className='text-green-500 '
+                    >
+                        view all comments
+                    </Link>
                 </div>
             </div>
+
+            {/* create comment form */}
+            <form onSubmit={commentHandler}
+                className='w-full flex flex-row border-t border-inherit h-10'
+            >
+                <input
+                    type='text'
+                    value={text}
+                    onChange={e => setText(e.target.value)}
+                    placeholder='Add a comment'
+                    className='w-full outline-none px-4'
+                />
+                <button 
+                    type='submit'
+                    className='text-blue-700 pr-4'
+                >
+                    Post
+                </button>
+            </form>
         </div>
-        
-
-
     </div>
   )
 }
