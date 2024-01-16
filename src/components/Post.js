@@ -13,21 +13,25 @@ const Post = ({post}) => {
     const { token } = useSelector( (state) => state.auth );
 
     const [isLiked, setIsLiked] = useState(post.likes.includes(user._id));
+    const [likeCount, setLikeCount] = useState(post.likes.length);
 
-    const LikeHandler = async () => {
+    const LikeHandler = () => {
         const postId = post._id; 
         dispatch(likePost(postId, token));
-        await setIsLiked(true);
-        console.log("isLiked: ", isLiked);
+        setIsLiked(true);
+        setLikeCount(prevCount => prevCount + 1);
     }
 
-    const UnLikeHandler = async () => {
-        console.log("unlike handler clicked ", post);
+    const UnLikeHandler = () => {
         const postId = post._id;
         dispatch(unlikePost(postId, token));
-        await setIsLiked(false);
-        console.log("isLiked: ", isLiked);
+        setIsLiked(false);
+        setLikeCount(prevCount => Math.max(0, prevCount - 1));
     }
+
+    useEffect(() => {
+        setLikeCount(post.likes.length);
+    }, [post.likes.length])
 
   return (
     <div>
@@ -91,7 +95,7 @@ const Post = ({post}) => {
                 {/* no of likes */}
                 <div className='pl-4 pr-4'>
                     <p className='font-semibold'>
-                        {post.likes.length} likes
+                        {likeCount} likes
                     </p>
                 </div>
                 
