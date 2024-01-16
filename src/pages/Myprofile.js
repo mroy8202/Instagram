@@ -64,7 +64,8 @@ const Myprofile = () => {
                 (
                     <div className='w-8/12 mx-auto'>
                         {/* No posts */}
-                        <Spinner />
+                        <p className='flex justify-center'>NO POSTS</p>
+                        {/* <Spinner /> */}
                     </div>
                 ) 
                 : 

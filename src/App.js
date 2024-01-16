@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -11,6 +11,11 @@ import Myprofile from './pages/Myprofile';
 import ExpandPost from './components/ExpandPost';
 
 function App() {
+  const location = useLocation();
+
+  if(location.pathname !== "/user/post") {
+    localStorage.removeItem("currentPost");
+  }
 
   const { user } = useSelector( (state) => state.profile );
 
