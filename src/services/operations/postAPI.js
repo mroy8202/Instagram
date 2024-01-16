@@ -81,7 +81,7 @@ export function likePost(postId, token) {
             // console.log('POST ID: ', postId);
             // console.log('TOKEN: ', token);
 
-            const response = await apiConnector("POST", LIKE_POST_API, {postId}, {
+            const response = await apiConnector("PUT", LIKE_POST_API, {postId}, {
                 Authorization: `Bearer ${token}`
             });
 
@@ -91,7 +91,6 @@ export function likePost(postId, token) {
             }
 
             toast.success("Post liked");
-
         }
         catch(error) {
             console.log("Error in liking post...", error);
@@ -107,7 +106,7 @@ export function unlikePost(postId, token) {
             console.log('POST ID: ', postId);
             console.log('TOKEN: ', token);
 
-            const response = await apiConnector("POST", UNLIKE_POST_API, { postId }, {
+            const response = await apiConnector("PUT", UNLIKE_POST_API, { postId }, {
                 Authorization: `Bearer ${token}`
             });
 

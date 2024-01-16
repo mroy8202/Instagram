@@ -13,27 +13,21 @@ const Post = ({post}) => {
     const { token } = useSelector( (state) => state.auth );
 
     const [isLiked, setIsLiked] = useState(post.likes.includes(user._id));
-    // const [likesCount, setLikesCount] = useState(post.likes.length);
-    // const [currState, setCurrState] = useState(false);  
 
-    const LikeHandler = () => {
+    const LikeHandler = async () => {
         const postId = post._id; 
         dispatch(likePost(postId, token));
-        setIsLiked(true);
-        // setLikesCount(currState + 1);
-        // setCurrState(true);
+        await setIsLiked(true);
+        console.log("isLiked: ", isLiked);
     }
 
-    const UnLikeHandler = () => {
+    const UnLikeHandler = async () => {
         console.log("unlike handler clicked ", post);
         const postId = post._id;
         dispatch(unlikePost(postId, token));
-        setIsLiked(false);
-        // setLikesCount(currState - 1);
-        // setCurrState(true);
+        await setIsLiked(false);
+        console.log("isLiked: ", isLiked);
     }
-
-    
 
   return (
     <div>
@@ -76,14 +70,14 @@ const Post = ({post}) => {
                     {isLiked ? 
                     (
                         <AiFillLike  
-                            onClick={LikeHandler}
+                            onClick={UnLikeHandler}
                             className="h-10 w-10"
                         />
                     ) 
                     : 
                     (
                         <AiOutlineLike  
-                            onClick={UnLikeHandler}
+                            onClick={LikeHandler}
                             className="h-10 w-10"
                         />
                     )}
