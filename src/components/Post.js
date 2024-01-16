@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { likePost, unlikePost, createComment } from '../services/operations/postAPI';
 import { Link } from 'react-router-dom';
 import { setCurrentPost } from '../redux/slices/profileSlice';
+import { viewLikes } from '../services/operations/postAPI';
 
 const Post = ({post}) => {
 
@@ -45,6 +46,11 @@ const Post = ({post}) => {
 
     const handleViewPost = () => {
         dispatch(setCurrentPost(post));
+    }
+
+    const viewLikesHandler = () => {
+        const postId = post._id;
+        dispatch(viewLikes(postId ,token));
     }
 
   return (
@@ -107,9 +113,11 @@ const Post = ({post}) => {
 
                 {/* no of likes */}
                 <div className='pl-4 pr-4'>
-                    <p className='font-semibold'>
+                    <Link to={"/user/post/likes"} 
+                        onClick={viewLikesHandler}
+                        className='font-semibold'>
                         {likeCount} likes
-                    </p>
+                    </Link>
                 </div>
                 
                 {/* username & title */}
@@ -143,6 +151,7 @@ const Post = ({post}) => {
                     onChange={e => setText(e.target.value)}
                     placeholder='Add a comment'
                     className='w-full outline-none px-4'
+                    maxLength={40}
                 />
                 <button 
                     type='submit'

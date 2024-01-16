@@ -4,7 +4,7 @@ const router = express.Router();
 // import controllers
 const { auth } = require("../middlewares/auth");
 const { createPost, deletePost, getMyPost, getHomepagePost } = require("../controllers/Post");
-const { likePost, unlikePost } = require("../controllers/Like");
+const { likePost, unlikePost, viewLikes } = require("../controllers/Like");
 const { createComment } = require("../controllers/Comment");
 
 // route handler
@@ -16,6 +16,7 @@ router.get("/getHomepagePost", auth, getHomepagePost);
 // Like routes
 router.put("/likePost", auth, likePost);
 router.put("/unlikePost", auth, unlikePost);
+router.get("/viewLikes", auth, viewLikes);
 
 // Comment routes
 router.post("/createComment", auth, createComment);

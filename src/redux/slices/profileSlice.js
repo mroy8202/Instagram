@@ -9,6 +9,7 @@ const initialState = {
     homepagePosts: [],
     myPosts: [],
     currentPost: storedCurrentPost ? JSON.parse(storedCurrentPost) : null,
+    likes: [],
 }
 
 // create slice
@@ -31,9 +32,12 @@ const profileSlice = createSlice({
         setCurrentPost(state, value) {
             localStorage.setItem("currentPost", JSON.stringify(value.payload));
             state.currentPost = value.payload;
+        },
+        setLikes(state, value) {
+            state.likes = value.payload;
         }
     }
 });
 
-export const { setUser, setLoading, setHomePagePosts, setMyPosts, setCurrentPost } = profileSlice.actions;
+export const { setUser, setLoading, setHomePagePosts, setMyPosts, setCurrentPost, setLikes } = profileSlice.actions;
 export default profileSlice.reducer;

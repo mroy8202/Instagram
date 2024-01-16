@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import Homepage from './pages/Homepage';
 import Myprofile from './pages/Myprofile';
 import ExpandPost from './components/ExpandPost';
+import ExpandLikes from './components/ExpandLikes';
 
 function App() {
   const location = useLocation();
@@ -70,6 +71,15 @@ function App() {
               <ExpandPost />
             </PrivateRoute>
           }
+        />
+
+        {/* expand likes */}
+        <Route path='/user/post/likes'
+          element={
+            <PrivateRoute>
+              <ExpandLikes />
+            </PrivateRoute>
+          } 
         />
         
 

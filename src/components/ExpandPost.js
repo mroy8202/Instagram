@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createComment } from '../services/operations/postAPI';
+import { createComment, viewLikes } from '../services/operations/postAPI';
+import { Link } from 'react-router-dom';
 
 const ExpandPost = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,11 @@ const ExpandPost = () => {
         const postId = currentPost._id;
         dispatch(createComment(postId, text, token));
         setText('');
+    }
+
+    const viewLikesHandler = () => {
+        const postId = currentPost._id;
+        dispatch(viewLikes(postId ,token));
     }
 
   return (
@@ -69,9 +75,11 @@ const ExpandPost = () => {
                 {/* footer */}
                 <div className='absolute bottom-0 left-0 right-0 h-20 border-t border-black'>
                     <div>
-                        <p className='px-4 font-semibold'>
+                        <Link to={'/user/post/likes'} 
+                            onClick={viewLikesHandler}
+                            className='px-4 font-semibold'>
                             {currentPost.likes.length} likes
-                        </p>
+                        </Link>
                         {/* comment form */}
                         <form onSubmit={commentHandler}
                             className='w-full flex flex-row border-t border-white h-10'
@@ -82,6 +90,7 @@ const ExpandPost = () => {
                                 onChange={e => setText(e.target.value)}
                                 placeholder='Add a comment'
                                 className='w-full outline-none px-4 bg-black'
+                                maxLength={40}
                             />
                             <button 
                                 type='submit'

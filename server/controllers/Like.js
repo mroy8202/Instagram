@@ -89,3 +89,41 @@ exports.unlikePost = async (req, res) => {
         });
     }
 }
+
+// viewLikes
+exports.viewLikes = async (req, res) => {
+    try {
+        // fetch postId
+        const postId = req.query.postId;
+        // console.log("POST ID: ", postId);
+
+        if(!postId) {
+            return res.status(500).json({
+                success: false,
+                message: "cannot fetch postId",
+            });
+        }
+
+        const post = await Post.findById(postId).populate("likes").exec();
+        if(!post) {
+            return res.status(500).json({
+                success: false,
+                message: "cannot fetch post",
+            });
+        }
+
+        // return a successfull response
+        return res.status(200).json({
+            success: true,
+            message: "post fetched successfully",
+            data: post.likes
+        });
+    }
+    catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error in viewing likes on a post form server side",
+            error: error.message,
+        });
+    }
+}

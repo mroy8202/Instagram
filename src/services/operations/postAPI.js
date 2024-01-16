@@ -2,7 +2,7 @@
 import { apiConnector } from "../apiconnector";
 import { postEndpoints } from "../apis";
 import toast from "react-hot-toast";
-import { setHomePagePosts, setMyPosts, setCurrentPost } from "../../redux/slices/profileSlice";
+import { setHomePagePosts, setMyPosts, setCurrentPost, setLikes } from "../../redux/slices/profileSlice";
 
 
 
@@ -14,6 +14,7 @@ const {
     HOMEPAGE_POST_API,
     LIKE_POST_API,
     UNLIKE_POST_API,
+    VIEW_POST_API,
     CREATE_COMMENT_API,
 } = postEndpoints;
 
@@ -128,9 +129,6 @@ export function unlikePost(postId, token) {
 export function createComment(postId, text, token) {
     return async(dispatch) => {
         try {
-            // console.log('POST ID: ', postId);
-            // console.log("TEXT: ", text);
-            // console.log("TOKEN: ", token);
             const response = await apiConnector("POST", CREATE_COMMENT_API, {postId, text}, {
                 Authorization: `Bearer ${token}`
             });
@@ -145,6 +143,30 @@ export function createComment(postId, text, token) {
         catch(error) {
             console.log("create comment error... ", error);
             toast.error("error in creating comment")
+        }
+    }
+}
+
+// viewLikes api
+export function viewLikes(postId, token) {
+    return async (dispatch) => {
+        try {
+            // console.log('POSTID: ', postId);
+            // console.log('TOKEN: ', token);
+            const response = await apiConnector("GET", `${VIEW_POST_API}?postId=${postId}`, null, {
+                Authorization: `Bearer ${token}`
+            });
+            // console.log("RESPONSE: ", response);
+            if (!response.data.success) {
+                throw new Error(response.data.message)
+            }
+
+            await dispatch(setLikes(response.data.data));
+            toast.success("likes fetched");
+        }
+        catch(error) {
+            console.log("Error in viewing likes from client side... ", error);
+            toast.error("error");
         }
     }
 }
