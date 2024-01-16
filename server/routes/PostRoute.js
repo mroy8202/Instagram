@@ -14,8 +14,8 @@ router.get("/getMyPost", auth, getMyPost);
 router.get("/getHomepagePost", auth, getHomepagePost);
 
 // Like routes
-router.post("/likePost", auth, likePost);
-router.post("/unlikePost", auth, unlikePost);
+router.put("/likePost", auth, likePost);
+router.put("/unlikePost", auth, unlikePost);
 
 // Comment routes
 router.post("/createComment/:id", auth, createComment);
