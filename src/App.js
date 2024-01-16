@@ -8,7 +8,7 @@ import Navbar from './components/Navbar/Navbar';
 import { useSelector } from 'react-redux';
 import Homepage from './pages/Homepage';
 import Myprofile from './pages/Myprofile';
-
+import ExpandPost from './components/ExpandPost';
 
 function App() {
 
@@ -54,6 +54,15 @@ function App() {
           element={
             <PrivateRoute>
               <Myprofile />
+            </PrivateRoute>
+          }
+        />
+
+        {/* post Route */}
+        <Route path='/user/post'
+          element={
+            <PrivateRoute>
+              <ExpandPost />
             </PrivateRoute>
           }
         />

@@ -6,6 +6,7 @@ import { FaRegComment } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { likePost, unlikePost, createComment } from '../services/operations/postAPI';
 import { Link } from 'react-router-dom';
+import { setCurrentPost } from '../redux/slices/profileSlice';
 
 const Post = ({post}) => {
 
@@ -40,6 +41,10 @@ const Post = ({post}) => {
         const postId = post._id;
         dispatch(createComment(postId, text, token));
         setText('');
+    }
+
+    const handleViewPost = () => {
+        dispatch(setCurrentPost(post));
     }
 
   return (
@@ -119,8 +124,9 @@ const Post = ({post}) => {
 
                 {/* comments */}
                 <div className='pl-4 pr-4'>
-                    <Link to={"/"}
+                    <Link to={"/user/post"}
                         className='text-green-500 '
+                        onClick={handleViewPost}
                     >
                         view all comments
                     </Link>

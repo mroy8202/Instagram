@@ -211,6 +211,8 @@ exports.getHomepagePost = async (req, res) => {
             .limit(10)
             .sort({createdAt: -1})
             .populate("user")
+            .populate("likes")
+            .populate("comments.user")
             .exec();
         
         // console.log("POSTS :", posts);

@@ -6,6 +6,7 @@ const initialState = {
     loading: false,
     homepagePosts: [],
     myPosts: [],
+    currentPost: [],
 }
 
 // create slice
@@ -24,9 +25,12 @@ const profileSlice = createSlice({
         },
         setMyPosts(state, value) {
             state.myPosts = value.payload;
+        },
+        setCurrentPost(state, value) {
+            state.currentPost = value.payload;
         }
     }
 });
 
-export const { setUser, setLoading, setHomePagePosts, setMyPosts } = profileSlice.actions;
+export const { setUser, setLoading, setHomePagePosts, setMyPosts, setCurrentPost } = profileSlice.actions;
 export default profileSlice.reducer;
