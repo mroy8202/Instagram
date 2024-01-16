@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const storedCurrentPost = localStorage.getItem("currentPost");
+
 // initial state
 const initialState = {
     user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     loading: false,
     homepagePosts: [],
     myPosts: [],
-    currentPost: [],
+    currentPost: storedCurrentPost ? JSON.parse(storedCurrentPost) : null,
 }
 
 // create slice
@@ -27,6 +29,7 @@ const profileSlice = createSlice({
             state.myPosts = value.payload;
         },
         setCurrentPost(state, value) {
+            localStorage.setItem("currentPost", JSON.stringify(value.payload));
             state.currentPost = value.payload;
         }
     }
