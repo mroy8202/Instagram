@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { homepagePost } from '../services/operations/postAPI'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from '../components/Post'
-import Spinner from "../components/Spinner"
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ const Homepage = () => {
       <div className='w-8/12 mx-auto flex flex-col'>
         {
           homepagePosts.length === 0 
-          ? <Spinner />
+          ? <div> No Posts to show </div>
           : 
           homepagePosts.map( (post) => (
             <div key={post._id} onClick={() => postClichHandler(post)}>

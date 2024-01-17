@@ -38,20 +38,6 @@ const Navbar = () => {
                     <img src={logo} alt='logo.png' loading='lazy'/>
                 </Link>
 
-
-                {/* search bar */}
-                <div className='w-48 flex items-center'>
-                    <input
-                        type='text'
-                        name='userText'
-                        // value={userText}
-                        // onChange={handleOnChange}
-                        placeholder='Search users'
-                        autoComplete='name'
-                        className='border border-slate-500 rounded p-2 w-full outline-none text-sm'
-                    />
-                </div>
-
                 {/* useful buttons */}
                 <div className='flex items-center gap-4'>
                     {/* create post */}

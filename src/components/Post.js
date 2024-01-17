@@ -73,11 +73,6 @@ const Post = ({post}) => {
                         </p>
                     </div>
                 </div>
-                
-                {/* Edit actions */}
-                <div>
-                    <BsThreeDots />
-                </div>
             </div>
 
             {/* post picture */}

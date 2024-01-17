@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import Spinner from '../components/Spinner'
 import { useDispatch, useSelector } from 'react-redux'
-import { BsThreeDots } from "react-icons/bs";
 import { myPost } from "../services/operations/postAPI";
 import Post from '../components/Post';
 
@@ -32,17 +30,6 @@ const Myprofile = () => {
                 {/* username & follow button */}
                 <div className='flex flex-row gap-4'>
                     <p className='font-semibold'>{user.username}</p>
-                    <button className='border border-black rounded-md'>
-                        Follow
-                    </button>
-                    <BsThreeDots />
-                </div>
-
-                {/* no. of posts, no.of follwers, no.of following */}
-                <div className='flex flex-row gap-8'>
-                    <p className='font-semibold'>{user.posts.length} <span className='font-normal'>posts</span></p>
-                    <p className='font-semibold'>{user.follower.length} <span className='font-normal'>followers</span></p>
-                    <p className='font-semibold'>{user.following.length} <span className='font-normal'>followings</span></p>
                 </div>
 
                 {/* name */}

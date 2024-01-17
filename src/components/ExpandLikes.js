@@ -20,7 +20,7 @@ const ExpandLikes = () => {
                 {
                     likes && likes.map((like) => (
                         <div key={like._id}
-                            className='flex flex-row relative'
+                            className='flex flex-row'
                         >
                             {/* user profile pic */}
                             <div className='h-8 w-8 rounded-full overflow-hidden'>
@@ -30,13 +30,6 @@ const ExpandLikes = () => {
                             {/* username */}
                             <div className='pl-2'>
                                 {like.username}
-                            </div>
-
-                            {/* follow */}
-                            <div className='absolute right-0'>
-                                <button className='border border-inherit rounded-lg text-sm p-1'>
-                                    Follow
-                                </button>
                             </div>
                         </div>
                     ))
