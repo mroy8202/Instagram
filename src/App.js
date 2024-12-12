@@ -22,7 +22,7 @@ function App() {
   const { user } = useSelector( (state) => state.profile );
 
   return (
-    <div className='w-screen font-inter'>
+    <div className='w-screen font-inter bg-gray-100'>
       {/* Navigation bar */}
       {user && (
         <Navbar />
