@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# Instagram
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project consists of a full-stack application that mimics Instagram's core functionality, including user authentication, post creation, liking, commenting, and more. It is built using React for the frontend and Node.js/Express for the backend.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **User Authentication**: Secure login and registration using JWT, with encrypted passwords via bcrypt.
+- **Post Creation**: Users can create, update, and delete posts.
+- **Like & Comment**: Users can like, unlike, and comment on posts.
+- **Secure Transactions**: All operations are protected by JWT-based authentication.
+- **Media Upload**: Integration with Cloudinary for storing images.
+- **Frontend**: A user-friendly interface built with React.js, Redux for state management, and TailwindCSS for styling.
+- **Backend**: REST API built with Node.js, Express, and MongoDB for data storage.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React.js, Redux, TailwindCSS
+- **Backend**: Node.js, Express.js, MongoDB, JWT, bcrypt
+- **Database**: MongoDB
+- **Other**: Cloudinary, Nodemailer
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js
+- MongoDB
+- Cloudinary API credentials
 
-### `npm run build`
+### Setup Instructions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository.
+   
+2. Install dependencies for both the frontend and backend:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    **For Backend**:
+    ```bash
+    cd server
+    npm install
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    **For Frontend**:
+    ```bash
+    cd client
+    npm install
+    ```
 
-### `npm run eject`
+3. Create a `.env` file in the root of the backend project with the following:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    ```bash
+    JWT_SECRET=your_secret_key
+    CLOUDINARY_CLOUD_NAME=your_cloud_name
+    CLOUDINARY_API_KEY=your_api_key
+    CLOUDINARY_API_SECRET=your_api_secret
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Run the development server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    **For Backend**:
+    ```bash
+    cd server
+    npm run dev
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    **For Frontend**:
+    ```bash
+    cd client
+    npm start
+    ```
 
-## Learn More
+5. The application should now be running at `http://localhost:3000` for the frontend and `http://localhost:4000` for the backend.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Routes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Authentication
 
-### Code Splitting
+- **`POST /api/v1/auth/signup`**: Register a new user.
+- **`POST /api/v1/auth/login`**: Login an existing user.
+- **`POST /api/v1/auth/changePassword`**: Change user password.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Post Routes
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **`POST /api/v1/post/createPost`**: Create a new post.
+- **`POST /api/v1/post/createPost`**: Create a new post (another instance to emphasize).
+- **`GET /api/v1/post/getMyPost`**: Get posts of the logged-in user.
+- **`GET /api/v1/post/getHomepagePost`**: Get posts from users the logged-in user follows.
+- **`DELETE /api/v1/post/deletePost/:id`**: Delete a specific post.
+- **`PUT /api/v1/post/likePost`**: Like a post.
+- **`PUT /api/v1/post/unlikePost`**: Unlike a post.
+- **`GET /api/v1/post/viewLikes`**: View likes on a post.
+- **`POST /api/v1/post/createComment`**: Add a comment to a post.
