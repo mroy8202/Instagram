@@ -18,7 +18,7 @@ const Homepage = () => {
 
   return (
     <div className=''>
-      <div className='w-8/12 mx-auto flex flex-col'>
+      <div className='w-8/12 mx-auto flex flex-col bg-gray-100'>
         {
           homepagePosts.length === 0 
           ? <div> No Posts to show </div>
